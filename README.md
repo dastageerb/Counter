@@ -6,13 +6,11 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178c6?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
 [![Dexie.js](https://img.shields.io/badge/IndexedDB-Dexie.js_4.x-purple?style=for-the-badge)](https://dexie.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.0-38bdf8?style=for-the-badge&logo=tailwindcss)](https://tailwindcss.com/)
-[![Supabase](https://img.shields.io/badge/Supabase-Delta_Sync-emerald?style=for-the-badge&logo=supabase)](https://supabase.com/)
-[![Throughput](https://img.shields.io/badge/Checkout_Speed-0.4s_Median-brightgreen?style=for-the-badge)](#-performance--offline-benchmarks)
-[![Resilience](https://img.shields.io/badge/Offline_Buffer-14_Days_Zero_Downtime-orange?style=for-the-badge)](#-core-capabilities)
+[![Supabase](https://img.shields.io/badge/Supabase-Cloud_Sync-emerald?style=for-the-badge&logo=supabase)](https://supabase.com/)
 
-**Counter** is a high-velocity, keyboard-first, offline-resilient point of sale (POS), inventory, and customer khata management platform built for modern supermarkets, grocery marts, pharmacies, and high-volume retail chains.
+**Counter** is a keyboard-first, offline-ready point of sale (POS), inventory, and customer khata management platform built for modern supermarkets, grocery marts, pharmacies, and high-volume retail stores.
 
-Traditional cloud POS systems freeze the moment internet connectivity fluctuates, creating long lines at checkout counters and lost revenue. Counter eliminates network dependency from the critical checkout path by running an in-browser transactional database (`Dexie.js` over `IndexedDB`). Barcode scans and cash registers operate with **sub-second latency (0.4s median bill time)** even during multi-day internet blackouts, automatically reconciling delta syncs to Supabase when connectivity returns.
+Counter is engineered with an offline-first architecture to provide reliable, uninterrupted checkout operations. By leveraging local in-browser database storage (`Dexie.js` over `IndexedDB`), cashiers can scan barcodes, ring up sales, and generate receipts smoothly without depending on constant internet connectivity. Once a connection is active, sales records and inventory adjustments automatically sync with the cloud database (Supabase).
 
 🔗 **Live Website / Demo:** [counterhere.netlify.app](https://counterhere.netlify.app/)
 
@@ -34,23 +32,13 @@ A modern, distraction-free retail cashier experience running locally on counter 
 
 | Feature | Description | Benefit |
 |---|---|---|
-| **0.4s Median Checkout** | In-memory IndexedDB hash tables | Eliminates checkout line bottlenecks during peak hours. |
-| **14-Day Offline Resilience** | Append-only local transaction buffer | Store keeps selling and printing receipts during fiber/ISP cuts. |
-| **Full Numpad Operation** | Custom keyboard navigation layer | Cashiers process baskets without ever touching a mouse. |
-| **Digital WhatsApp Receipts** | Direct API dispatch & downloadable slip | Reduces thermal paper costs while modernizing customer communication. |
-| **Dual-Entry Khata Ledger** | Immutable debit/credit ledger | Transparent credit tracking for loyal recurring customers. |
-| **Multi-Branch Delta Sync** | Conflict-free timestamp reconciliation | Multi-store owners view live inventory and sales from anywhere. |
-| **Hardware Agnostic** | Standard WebUSB, WebSerial & ESC/POS | Works with existing Star, Epson, and generic 58mm/80mm thermal printers. |
-
----
-
-## 📊 Performance & Offline Benchmarks
-
-- **Median Bill Time:** `0.41 seconds` (Barcode scan $\rightarrow$ Tender $\rightarrow$ Receipt spool)
-- **Local Catalog Capacity:** `100,000+ SKUs` indexed locally in browser IndexedDB
-- **Search Latency:** `< 0.8ms` full-text search across product catalog
-- **Offline Endurance:** Tested through `15,000 continuous offline transactions` without packet drop
-- **Cold Start Time:** `< 1.2s` on low-power Intel Celeron / Pentium POS terminals
+| **Fast Local Checkout** | In-browser IndexedDB caching | Responsive barcode lookups and immediate line itemization. |
+| **Offline Billing Continuity** | Local transaction queue | Cash registers continue billing and printing receipts during network drops. |
+| **Full Numpad Operation** | Custom keyboard navigation layer | Cashiers process baskets quickly without needing a mouse. |
+| **Digital WhatsApp Receipts** | Direct API dispatch & downloadable slip | Reduces paper usage while making receipts easy for customers to save. |
+| **Dual-Entry Khata Ledger** | Built-in debit/credit ledger | Clear credit tracking for recurring customer accounts. |
+| **Multi-Branch Cloud Sync** | Timestamp reconciliation | Centralized sales and stock visibility across store locations. |
+| **Hardware Agnostic** | Standard WebUSB, WebSerial & ESC/POS | Compatible with standard USB barcode scanners and thermal receipt printers. |
 
 ---
 

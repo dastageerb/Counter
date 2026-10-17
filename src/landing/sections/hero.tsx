@@ -182,41 +182,41 @@ export function Hero() {
               </a>
             </div>
 
-            {/* Hardware & Speed Throughput Matrix */}
+            {/* Architecture & Reliability Matrix */}
             <div
               className="mt-8 grid grid-cols-3 gap-3 rounded-xl border p-4"
               style={{ borderColor: "var(--cnt-line)", background: "var(--cnt-panel-2)" }}
             >
               <div>
                 <div className="text-[10px] font-mono uppercase tracking-wider" style={{ color: "var(--cnt-ink-dim)" }}>
-                  Scan-to-Bill
+                  Architecture
                 </div>
-                <div className="text-xl font-bold font-mono tracking-tight sm:text-2xl" style={{ color: "var(--cnt-accent-2)" }}>
-                  0.4s
+                <div className="text-lg font-bold font-mono tracking-tight sm:text-xl" style={{ color: "var(--cnt-accent-2)" }}>
+                  Local-First
                 </div>
                 <div className="text-[11px] leading-tight" style={{ color: "var(--cnt-ink-dim)" }}>
-                  sub-second local barcode lookup
+                  instant in-browser billing
                 </div>
               </div>
 
               <div className="border-l pl-3" style={{ borderColor: "var(--cnt-line)" }}>
                 <div className="text-[10px] font-mono uppercase tracking-wider" style={{ color: "var(--cnt-ink-dim)" }}>
-                  Offline Buffer
+                  Connectivity
                 </div>
-                <div className="text-xl font-bold font-mono tracking-tight sm:text-2xl" style={{ color: "var(--cnt-accent)" }}>
-                  14 Days
+                <div className="text-lg font-bold font-mono tracking-tight sm:text-xl" style={{ color: "var(--cnt-accent)" }}>
+                  Offline-Ready
                 </div>
                 <div className="text-[11px] leading-tight" style={{ color: "var(--cnt-ink-dim)" }}>
-                  zero router dependency
+                  uninterrupted sales queue
                 </div>
               </div>
 
               <div className="border-l pl-3" style={{ borderColor: "var(--cnt-line)" }}>
                 <div className="text-[10px] font-mono uppercase tracking-wider" style={{ color: "var(--cnt-ink-dim)" }}>
-                  Peripherals
+                  Hardware
                 </div>
-                <div className="text-xl font-bold font-mono tracking-tight sm:text-2xl" style={{ color: "var(--cnt-ink)" }}>
-                  100% USB
+                <div className="text-lg font-bold font-mono tracking-tight sm:text-xl" style={{ color: "var(--cnt-ink)" }}>
+                  Standard USB
                 </div>
                 <div className="text-[11px] leading-tight" style={{ color: "var(--cnt-ink-dim)" }}>
                   scanners, printers & scales

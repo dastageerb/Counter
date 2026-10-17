@@ -7,7 +7,7 @@ const STEPS = [
     icon: <Receipt className="h-4 w-4" />,
     title: "Bill on the counter machine",
     body: "Scan, pick the customer, take cash, card or khata. The bill is written to local storage the instant you press pay — receipt prints whether or not there is a signal.",
-    meta: ["~0.4s per bill", "58/80mm + A4", "Hold & resume bills"],
+    meta: ["Instant barcode scan", "58/80mm + A4", "Hold & resume bills"],
   },
   {
     n: "02",

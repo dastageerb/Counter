@@ -15,15 +15,14 @@ export function Features() {
     <Section id="features" className="scroll-mt-12 relative">
       <span id="product" className="absolute -top-20 pointer-events-none" aria-hidden="true" />
       <SectionHead
-        eyebrow="What makes it different"
+        eyebrow="Reliable Retail Architecture"
         title={
           <>
-            Most POS software assumes
-            <br className="hidden sm:block" /> the internet is a utility.
-            <br className="hidden sm:block" /> We assume it is a guest.
+            Engineered for continuous checkout,
+            <br className="hidden sm:block" /> online or offline.
           </>
         }
-        body="Counter writes every bill, stock move and khata entry to the machine in front of you first. The cloud is a backup and a reporting layer — never a dependency on the sales floor."
+        body="Counter writes sales, stock adjustments, and khata entries locally first. Your cash registers keep moving smoothly, syncing automatically with cloud reporting when connected."
       />
 
       <div className="mt-14 grid gap-4 lg:grid-cols-3">
@@ -41,21 +40,20 @@ export function Features() {
                 >
                   <CloudOff className="h-4 w-4" />
                 </span>
-                <h3 className="cnt-display mt-4 text-2xl">Billing that never waits for a signal</h3>
+                <h3 className="cnt-display mt-4 text-2xl">Responsive billing with local storage</h3>
                 <p
                   className="mt-3 text-[14.5px] leading-relaxed"
                   style={{ color: "var(--cnt-ink-soft)" }}
                 >
-                  Bills are committed locally in milliseconds. When the connection returns, Counter
-                  reconciles with the server — and if the server disagrees about stock, it tells you
-                  exactly what changed and why, instead of silently overselling.
+                  Bills are committed locally on your terminal so ringing never pauses during network drops.
+                  When an internet connection is available, Counter reconciles transactions with the central database in the background, updating live stock counts and balances.
                 </p>
               </div>
 
-              {/* two-path diagram: cloud-first vs local-first */}
+              {/* Status indicators */}
               <div className="w-full max-w-[260px] shrink-0 space-y-3">
-                <PathRow tone="danger" label="Cloud-first POS" note="router down → queue stops" />
-                <PathRow tone="ok" label="Counter" note="router down → billing continues" />
+                <PathRow tone="ok" label="Online Mode" note="instant cloud & stock sync" />
+                <PathRow tone="ok" label="Offline Mode" note="uninterrupted register billing" />
                 <div
                   className="rounded-lg border px-3 py-2.5 text-[11.5px]"
                   style={{
@@ -64,8 +62,7 @@ export function Features() {
                     color: "var(--cnt-ink-soft)",
                   }}
                 >
-                  Tested to <span style={{ color: "var(--cnt-accent)" }}>14 days</span> of queued
-                  billing on a single tablet before sync.
+                  Seamless background reconciliation the moment network connectivity is restored.
                 </div>
               </div>
             </div>
