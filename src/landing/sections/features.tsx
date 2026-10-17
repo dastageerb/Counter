@@ -12,7 +12,8 @@ import { Reveal, Section, SectionHead } from "../primitives";
 
 export function Features() {
   return (
-    <Section id="product">
+    <Section id="features" className="scroll-mt-12 relative">
+      <span id="product" className="absolute -top-20 pointer-events-none" aria-hidden="true" />
       <SectionHead
         eyebrow="What makes it different"
         title={

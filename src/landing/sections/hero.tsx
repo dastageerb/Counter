@@ -158,11 +158,25 @@ export function Hero() {
             </p>
 
             <div className="mt-7 flex flex-wrap items-center gap-3">
-              <a href="#pricing" className="cnt-btn cnt-btn--primary !h-11 !px-5 text-sm">
+              <a
+                href="#pricing"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" });
+                }}
+                className="cnt-btn cnt-btn--primary !h-11 !px-5 text-sm"
+              >
                 Start 14-day trial
                 <ArrowRight className="h-4 w-4" />
               </a>
-              <a href="#features" className="cnt-btn cnt-btn--ghost !h-11 !px-5 text-sm">
+              <a
+                href="#features"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById("features")?.scrollIntoView({ behavior: "smooth" });
+                }}
+                className="cnt-btn cnt-btn--ghost !h-11 !px-5 text-sm"
+              >
                 Explore POS Features
                 <ArrowRight className="h-3.5 w-3.5" />
               </a>

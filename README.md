@@ -14,6 +14,8 @@
 
 Traditional cloud POS systems freeze the moment internet connectivity fluctuates, creating long lines at checkout counters and lost revenue. Counter eliminates network dependency from the critical checkout path by running an in-browser transactional database (`Dexie.js` over `IndexedDB`). Barcode scans and cash registers operate with **sub-second latency (0.4s median bill time)** even during multi-day internet blackouts, automatically reconciling delta syncs to Supabase when connectivity returns.
 
+🔗 **Live Website / Demo:** [counterhere.netlify.app](https://counterhere.netlify.app/)
+
 ---
 
 > **Notice:** This repository is a commercial product showcase and portfolio case study. The application source code, proprietary synchronization logic, and database schemas remain private. For live demonstration access or licensing, please contact directly below.
