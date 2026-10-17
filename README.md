@@ -7,8 +7,8 @@
 [![Dexie.js](https://img.shields.io/badge/IndexedDB-Dexie.js_4.x-purple?style=for-the-badge)](https://dexie.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.0-38bdf8?style=for-the-badge&logo=tailwindcss)](https://tailwindcss.com/)
 [![Supabase](https://img.shields.io/badge/Supabase-Delta_Sync-emerald?style=for-the-badge&logo=supabase)](https://supabase.com/)
-[![Throughput](https://img.shields.io/badge/Checkout_Speed-0.4s_Median-brightgreen?style=for-the-badge)](#performance--benchmarks)
-[![Resilience](https://img.shields.io/badge/Offline_Buffer-14_Days_Zero_Downtime-orange?style=for-the-badge)](#offline-first-architecture)
+[![Throughput](https://img.shields.io/badge/Checkout_Speed-0.4s_Median-brightgreen?style=for-the-badge)](#-performance--offline-benchmarks)
+[![Resilience](https://img.shields.io/badge/Offline_Buffer-14_Days_Zero_Downtime-orange?style=for-the-badge)](#-core-capabilities)
 
 **Counter** is a high-velocity, keyboard-first, offline-resilient point of sale (POS), inventory, and customer khata management platform built for modern supermarkets, grocery marts, pharmacies, and high-volume retail chains.
 
@@ -16,61 +16,26 @@ Traditional cloud POS systems freeze the moment internet connectivity fluctuates
 
 ---
 
+> **Notice:** This repository is a commercial product showcase and portfolio case study. The application source code, proprietary synchronization logic, and database schemas remain private. For live demonstration access or licensing, please contact directly below.
+
+---
+
 ## 📸 Product Overview & Interface
 
-A modern, distraction-free retail cashier experience running locally on counter hardware. Featuring instant barcode search, itemized grocery lines, split cash/credit tenders, real-time Khata ledger tracking, and simulated thermal paper receipt spooling:
+A modern, distraction-free retail cashier experience running locally on counter hardware. Featuring instant barcode search, itemized grocery lines, split cash/credit tenders, real-time Khata ledger tracking, and thermal paper receipt printing:
 
 ![Counter Offline-First Retail POS Interface](docs/assets/counter-01-hero.png)
 
 ---
 
-## 🏛️ System Architecture
-
-Counter eliminates the network round-trip from the cashier checkout path by decoupling local transactional operations from cloud synchronization.
-
-```mermaid
-flowchart TD
-    subgraph Hardware["Retail Hardware Peripherals"]
-        SCAN["Barcode Scanner\n(USB / Bluetooth HID)"]
-        PRINT["Thermal Receipt Printer\n(ESC/POS 80mm / 58mm)"]
-        SCALE["Digital Weighing Scale"]
-    end
-
-    subgraph ClientTills["Counter POS Client (React 19 / TypeScript)"]
-        SCAN -->|Instant Keystroke Scan| POS_UI["Cashier Checkout Surface"]
-        POS_UI -->|WebUSB / WebSerial| PRINT
-        POS_UI -->|Weight Telemetry| SCALE
-        POS_UI -->|Sub-millisecond write| DEXIE["Local Dexie.js / IndexedDB\n- 100K+ Product Catalog\n- Barcode Hash Map\n- Unsynced Sales Buffer"]
-    end
-
-    subgraph SyncWorker["Background Sync Engine"]
-        QUEUE["Deterministic Offline Queue\n(Sequence-Ordered Deltas)"]
-        HEARTBEAT["Network Heartbeat Sensor"]
-        DEXIE -->|Append Sales Log| QUEUE
-        QUEUE <-->|Heartbeat Ping| HEARTBEAT
-    end
-
-    subgraph Cloud["Cloud Infrastructure (Supabase)"]
-        SUPA_AUTH["Supabase Auth & RBAC\n(Admin, Cashier, Manager)"]
-        POSTGRES["PostgreSQL Relational DB\n(Central Inventory & Sales)"]
-        REPORTS["Analytics & BI Dashboards\n(Profit, Margin, Deadstock)"]
-        
-        HEARTBEAT -->|On Reconnect: Auto Batch Sync| POSTGRES
-        POSTGRES --> REPORTS
-        SUPA_AUTH --> POSTGRES
-    end
-```
-
----
-
 ## ⚡ Core Capabilities
 
-| Feature | Technical Implementation | Benefit |
+| Feature | Description | Benefit |
 |---|---|---|
 | **0.4s Median Checkout** | In-memory IndexedDB hash tables | Eliminates checkout line bottlenecks during peak hours. |
-| **14-Day Offline Resilience** | Dexie.js append-only transaction buffer | Store keeps selling and printing receipts during fiber/ISP cuts. |
+| **14-Day Offline Resilience** | Append-only local transaction buffer | Store keeps selling and printing receipts during fiber/ISP cuts. |
 | **Full Numpad Operation** | Custom keyboard navigation layer | Cashiers process baskets without ever touching a mouse. |
-| **Digital WhatsApp Receipts** | Direct API dispatch & downloadable slip | Reduces thermal paper costs to zero while modernizing customer communication. |
+| **Digital WhatsApp Receipts** | Direct API dispatch & downloadable slip | Reduces thermal paper costs while modernizing customer communication. |
 | **Dual-Entry Khata Ledger** | Immutable debit/credit ledger | Transparent credit tracking for loyal recurring customers. |
 | **Multi-Branch Delta Sync** | Conflict-free timestamp reconciliation | Multi-store owners view live inventory and sales from anywhere. |
 | **Hardware Agnostic** | Standard WebUSB, WebSerial & ESC/POS | Works with existing Star, Epson, and generic 58mm/80mm thermal printers. |
@@ -90,46 +55,20 @@ flowchart TD
 ## 🛠️ Tech Stack
 
 - **Frontend:** React 19, TypeScript, Vite
-- **Styling:** Tailwind CSS 4.0, Scoped OKLCH Optical Tokens, Lucide Icons
-- **Local Persistence:** Dexie.js 4.x (IndexedDB wrapper)
+- **Styling:** Tailwind CSS, Scoped OKLCH Tokens, Lucide Icons
+- **Local Persistence:** Dexie.js (IndexedDB wrapper)
 - **Cloud Backend:** Supabase (PostgreSQL, Row-Level Security, Edge Functions)
 - **Hardware Protocol:** WebUSB API, WebSerial API, ESC/POS binary encoding
 
 ---
 
-## 🚀 Getting Started
+## 💬 Access, Demos & Commercial Inquiries
 
-### Prerequisites
-- Node.js 18+ or 20+
-- npm or pnpm
+Counter is available for commercial deployment, customized mart setups, or private enterprise pilots.
 
-### Installation
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/dastageerb/Counter.git
-   cd Counter
-   ```
-
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-
-3. Start local development server:
-   ```bash
-   npm run dev
-   ```
-
-4. Build for production:
-   ```bash
-   npm run build
-   ```
+- **WhatsApp:** [+92 317 0319398](https://wa.me/923170319398)
+- **Email:** [dastageerb44@gmail.com](mailto:dastageerb44@gmail.com)
 
 ---
 
-## 📄 Contact & Licensing
-
-- **Direct Enquiries & Demos:** WhatsApp [+92 317 0319398](https://wa.me/923170319398) or email [dastageerb44@gmail.com](mailto:dastageerb44@gmail.com)
-- **Author:** Ghulam Dastageer — Full-Stack & Systems Architect
-- **License:** MIT License
+*Built by Ghulam Dastageer — Full-Stack Developer.*
