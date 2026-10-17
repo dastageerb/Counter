@@ -1,0 +1,540 @@
+/* ==========================================================================
+   Counter — marketing surface
+   Scoped tokens + optical effects for the public landing page only.
+   Nothing here leaks into the POS app: every rule is scoped under .cnt.
+   ========================================================================== */
+
+.cnt {
+  /* Dark canvas — opt-in via ?dark=1. The light overrides below are the
+     default, so this block is the "alternate" theme. */
+  --cnt-bg: #06070b;
+  --cnt-bg-2: #090b12;
+  --cnt-panel: oklch(0.19 0.015 258);
+  --cnt-panel-2: oklch(0.22 0.017 258);
+  --cnt-line: oklch(1 0 0 / 9%);
+  --cnt-line-strong: oklch(1 0 0 / 16%);
+
+  /* Ink */
+  --cnt-ink: oklch(0.97 0.004 250);
+  --cnt-ink-soft: oklch(0.78 0.012 252);
+  --cnt-ink-dim: oklch(0.62 0.014 254);
+
+  /* Brand — matches the POS primary, pushed a little brighter for dark canvas */
+  --cnt-accent: oklch(0.82 0.15 198);
+  --cnt-accent-2: oklch(0.72 0.16 168);
+  --cnt-accent-ink: oklch(0.16 0.03 220);
+  --cnt-warn: oklch(0.83 0.16 78);
+  --cnt-danger: oklch(0.7 0.2 25);
+
+  /* Brand mark gradient — bright on the dark canvas. */
+  --cnt-mark-a: oklch(0.86 0.14 196);
+  --cnt-mark-b: oklch(0.68 0.16 170);
+  --cnt-mark-ink: oklch(0.16 0.04 220);
+
+  position: relative;
+  isolation: isolate;
+  overflow-x: clip;
+  background: var(--cnt-bg);
+  color: var(--cnt-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  color-scheme: dark;
+}
+
+/* White is the default canvas — these overrides land on every `.cnt` unless
+   the dark variant opts out by omitting the class. */
+.cnt-light {
+  --cnt-bg: #ffffff;
+  --cnt-bg-2: #ffffff;
+  --cnt-panel: #ffffff;
+  --cnt-panel-2: #f6f7f9;
+  --cnt-line: oklch(0.2 0.02 258 / 11%);
+  --cnt-line-strong: oklch(0.2 0.02 258 / 20%);
+  --cnt-ink: oklch(0.2 0.02 258);
+  --cnt-ink-soft: oklch(0.42 0.018 256);
+  --cnt-ink-dim: oklch(0.56 0.016 256);
+  --cnt-accent: oklch(0.55 0.13 205);
+  --cnt-accent-2: oklch(0.52 0.13 168);
+  --cnt-accent-ink: oklch(0.99 0 0);
+  /* Deeper mark gradient — the dark-canvas one washes out on white. */
+  --cnt-mark-a: oklch(0.68 0.13 199);
+  --cnt-mark-b: oklch(0.53 0.13 168);
+  --cnt-mark-ink: oklch(0.99 0 0);
+  /* Tells the browser to draw native controls (the email field, scrollbars,
+     autofill) for a white page instead of the dark one. */
+  color-scheme: light;
+}
+
+/* Grain reads as dark speckle damage on a light canvas — pull it back hard. */
+.cnt-light.cnt-grain::after {
+  opacity: 0.06;
+  mix-blend-mode: multiply;
+}
+
+/* ---------- Optical backdrop: mesh + grid + grain ---------- */
+
+.cnt-mesh {
+  position: absolute;
+  inset: -20% -10% auto -10%;
+  height: 120vh;
+  z-index: -2;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      46% 40% at 18% 12%,
+      color-mix(in oklab, var(--cnt-accent) 26%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(
+      38% 34% at 78% 4%,
+      color-mix(in oklab, var(--cnt-accent-2) 20%, transparent),
+      transparent 72%
+    ),
+    radial-gradient(40% 40% at 52% 46%, oklch(0.5 0.16 285 / 16%), transparent 74%);
+  filter: blur(14px);
+}
+
+/* On white the same mesh reads as grey smog, so it drops to a faint cool
+   wash that keeps the canvas white instead of tinting it. */
+.cnt-light .cnt-mesh {
+  background:
+    radial-gradient(
+      44% 36% at 20% 8%,
+      color-mix(in oklab, var(--cnt-accent) 9%, transparent),
+      transparent 72%
+    ),
+    radial-gradient(
+      36% 30% at 78% 2%,
+      color-mix(in oklab, var(--cnt-accent-2) 7%, transparent),
+      transparent 74%
+    );
+  filter: blur(22px);
+}
+
+.cnt-grid {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, var(--cnt-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--cnt-line) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(circle 78vw at 50% 6%, #000 12%, transparent 72%);
+  -webkit-mask-image: radial-gradient(circle 78vw at 50% 6%, #000 12%, transparent 72%);
+  opacity: 0.5;
+}
+
+.cnt-light .cnt-grid {
+  opacity: 0.34;
+}
+
+/* Fine film grain kills the flat "gradient template" look. */
+.cnt-grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.32;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+}
+
+/* ---------- Type ---------- */
+
+.cnt-display {
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  line-height: 0.98;
+  text-wrap: balance;
+}
+
+.cnt-eyebrow {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--cnt-ink-dim);
+}
+
+/* Gradient ink that stays legible instead of the usual rainbow wash. */
+.cnt-ink-grad {
+  background: linear-gradient(
+    100deg,
+    var(--cnt-ink) 20%,
+    color-mix(in oklab, var(--cnt-accent) 78%, var(--cnt-ink)) 62%,
+    var(--cnt-ink) 92%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ---------- Primitives ---------- */
+
+.cnt-card {
+  position: relative;
+  border: 1px solid var(--cnt-line);
+  border-radius: 16px;
+  background: linear-gradient(180deg, var(--cnt-panel), var(--cnt-bg-2));
+  transition:
+    border-color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.cnt-card:hover {
+  border-color: var(--cnt-line-strong);
+}
+
+/* Hairline sheen across the top edge of a card. */
+.cnt-card--sheen::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 1px;
+  border-radius: inherit;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in oklab, var(--cnt-accent) 55%, transparent),
+    transparent
+  );
+  opacity: 0.65;
+}
+
+.cnt-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  height: 2.75rem;
+  padding: 0 1.15rem;
+  border-radius: 10px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  white-space: nowrap;
+  transition:
+    transform 0.16s ease,
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.25s ease;
+}
+
+.cnt-btn:active {
+  transform: translateY(1px);
+}
+
+.cnt-btn--primary {
+  background: var(--cnt-accent);
+  color: var(--cnt-accent-ink);
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, var(--cnt-accent) 40%, transparent),
+    0 12px 34px -14px color-mix(in oklab, var(--cnt-accent) 70%, transparent);
+}
+
+.cnt-btn--primary:hover {
+  background: color-mix(in oklab, var(--cnt-accent) 88%, white);
+}
+
+.cnt-btn--ghost {
+  border: 1px solid var(--cnt-line-strong);
+  background: color-mix(in oklab, var(--cnt-panel) 60%, transparent);
+  color: var(--cnt-ink);
+  backdrop-filter: blur(8px);
+}
+
+.cnt-btn--ghost:hover {
+  border-color: color-mix(in oklab, var(--cnt-accent) 45%, var(--cnt-line-strong));
+  background: color-mix(in oklab, var(--cnt-panel-2) 80%, transparent);
+}
+
+.cnt-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border: 1px solid var(--cnt-line);
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--cnt-panel) 55%, transparent);
+  padding: 0.3rem 0.7rem;
+  font-size: 0.75rem;
+  color: var(--cnt-ink-soft);
+  backdrop-filter: blur(6px);
+}
+
+.cnt-kbd {
+  display: inline-grid;
+  place-items: center;
+  min-width: 1.45rem;
+  height: 1.45rem;
+  padding: 0 0.35rem;
+  border: 1px solid var(--cnt-line-strong);
+  border-bottom-width: 2px;
+  border-radius: 6px;
+  background: color-mix(in oklab, var(--cnt-panel-2) 85%, transparent);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  color: var(--cnt-ink-soft);
+}
+
+/* ---------- Hero terminal simulation ---------- */
+
+.cnt-term {
+  border: 1px solid var(--cnt-line-strong);
+  border-radius: 18px;
+  background: linear-gradient(
+    180deg,
+    var(--cnt-panel),
+    color-mix(in oklab, var(--cnt-bg-2) 92%, black)
+  );
+  box-shadow:
+    0 1px 0 0 oklch(1 0 0 / 6%) inset,
+    0 60px 120px -50px oklch(0 0 0 / 85%),
+    0 0 0 1px oklch(0 0 0 / 40%);
+  overflow: hidden;
+}
+
+/* Rows of the simulated cart arrive one after another, then hold. */
+.cnt-row {
+  opacity: 0;
+  transform: translateY(6px);
+  animation: cnt-row-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: calc(var(--i) * 0.42s + 0.35s);
+}
+
+@keyframes cnt-row-in {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* The scan sweep crosses the product tile grid; each tile it passes lights up,
+   which is what puts the matching row into the cart. */
+.cnt-tiles {
+  position: relative;
+  overflow: hidden;
+}
+
+.cnt-scan {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 56px;
+  pointer-events: none;
+  z-index: 1;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    color-mix(in oklab, var(--cnt-accent) 10%, transparent) 45%,
+    color-mix(in oklab, var(--cnt-accent) 24%, transparent) 50%,
+    transparent
+  );
+  border-top: 1px solid color-mix(in oklab, var(--cnt-accent) 45%, transparent);
+  animation: cnt-scan 6.4s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  animation-delay: 0.45s;
+  opacity: 0.9;
+}
+
+@keyframes cnt-scan {
+  0% {
+    transform: translateY(-56px);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  52% {
+    transform: translateY(240px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(240px);
+    opacity: 0;
+  }
+}
+
+/* A tile "receives" the scan at the same moment its cart row appears. */
+.cnt-tile--hit {
+  animation: cnt-tile-hit 6.4s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+  animation-delay: calc(var(--hit) * 0.42s + 0.35s);
+}
+
+@keyframes cnt-tile-hit {
+  0% {
+    transform: none;
+    box-shadow: 0 0 0 0 transparent;
+  }
+  6% {
+    transform: scale(0.965);
+    box-shadow: 0 0 0 3px color-mix(in oklab, var(--cnt-accent) 22%, transparent);
+  }
+  16%,
+  100% {
+    transform: none;
+    box-shadow: 0 0 0 0 transparent;
+  }
+}
+
+.cnt-total {
+  animation: cnt-total-pop 6.4s ease-in-out infinite;
+}
+
+@keyframes cnt-total-pop {
+  0%,
+  8% {
+    transform: translateY(0);
+  }
+  14% {
+    transform: translateY(-2px);
+  }
+  20%,
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.cnt-caret::after {
+  content: "";
+  display: inline-block;
+  width: 1px;
+  height: 0.95em;
+  margin-left: 2px;
+  vertical-align: -0.1em;
+  background: var(--cnt-accent);
+  animation: cnt-blink 1.05s steps(1) infinite;
+}
+
+@keyframes cnt-blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Sync pulse — the offline-first claim, visualised. */
+.cnt-pulse {
+  position: relative;
+}
+
+.cnt-pulse::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in oklab, var(--cnt-accent-2) 60%, transparent);
+  animation: cnt-pulse 2.6s ease-out infinite;
+}
+
+@keyframes cnt-pulse {
+  0% {
+    transform: scale(0.85);
+    opacity: 0.9;
+  }
+  70% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Queued bills ticking upward while offline. */
+.cnt-ticker {
+  animation: cnt-ticker 6.4s steps(1) infinite;
+}
+
+@keyframes cnt-ticker {
+  0%,
+  30% {
+    opacity: 0;
+  }
+  31%,
+  100% {
+    opacity: 1;
+  }
+}
+
+/* ---------- Scroll-reveal ---------- */
+
+.cnt-reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--d, 0ms);
+}
+
+.cnt-reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------- Marquee ---------- */
+
+.cnt-marquee {
+  display: flex;
+  width: max-content;
+  animation: cnt-marquee 34s linear infinite;
+}
+
+@keyframes cnt-marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.cnt-fade-x {
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+
+/* ---------- Accordion (details/summary, no JS) ---------- */
+
+.cnt-faq summary::-webkit-details-marker {
+  display: none;
+}
+
+.cnt-faq summary {
+  list-style: none;
+  cursor: pointer;
+}
+
+.cnt-faq[open] .cnt-faq-plus {
+  transform: rotate(45deg);
+}
+
+.cnt-faq-body {
+  animation: cnt-faq-in 0.28s ease;
+}
+
+@keyframes cnt-faq-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cnt *,
+  .cnt *::after,
+  .cnt *::before {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .cnt-reveal {
+    opacity: 1;
+    transform: none;
+  }
+  .cnt-row {
+    opacity: 1;
+    transform: none;
+  }
+}
